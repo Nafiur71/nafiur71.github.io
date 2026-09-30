@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -100,6 +100,7 @@
       align-items: center;
       justify-content: space-between;
       height: 72px;
+      gap: 16px;
     }
 
     .brand {
@@ -108,6 +109,8 @@
       gap: 12px;
       font-weight: 800;
       font-size: 1.25rem;
+      text-decoration: none;
+      flex-shrink: 0;
     }
 
     .brand img {
@@ -119,6 +122,7 @@
 
     .brand span {
       color: #ffffff;
+      white-space: nowrap;
     }
 
     .nav-links {
@@ -131,11 +135,19 @@
       color: #cbd5e1;
       font-weight: 500;
       font-size: 0.95rem;
+      text-decoration: none;
       transition: color 0.2s ease;
     }
 
     .nav-links a:hover {
       color: #38bdf8;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
     }
 
     .btn-nav {
@@ -148,13 +160,78 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
+      text-decoration: none;
       box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
       transition: all 0.2s ease;
+      flex-shrink: 0;
     }
 
     .btn-nav:hover {
       background: #1e40af;
       transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-nav-version {
+      background: rgba(255, 255, 255, 0.18);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* 3-Line Hamburger Menu Toggle Button */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .menu-toggle:focus-visible {
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+
+    .hamburger-line {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background-color: #ffffff;
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      transform-origin: center;
+    }
+
+    /* Animated 'X' when open */
+    .menu-toggle.active .hamburger-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .menu-toggle.active .hamburger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
     }
 
     /* -------------------------------------------------------------
@@ -1017,8 +1094,105 @@
       .steps-grid {
         grid-template-columns: 1fr;
       }
+
+      /* Mobile 3-Line Hamburger & Dropdown Menu */
+      .menu-toggle {
+        display: flex;
+      }
+
       .nav-links {
-        display: none;
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 17, 32, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px 20px 20px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+        z-index: 999;
+      }
+
+      .nav-links.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .nav-links a {
+        padding: 14px 16px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #e2e8f0;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .nav-links a:last-child {
+        border-bottom: none;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:active {
+        color: #38bdf8;
+        background: rgba(56, 189, 248, 0.1);
+        padding-left: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-bar {
+        height: 64px;
+      }
+
+      .brand {
+        font-size: 1.05rem;
+        gap: 9px;
+      }
+
+      .brand img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .btn-nav {
+        padding: 8px 13px;
+        font-size: 0.82rem;
+        gap: 6px;
+      }
+
+      .btn-nav-version {
+        display: none; /* Prevents button wrapping or becoming fat on mobile */
+      }
+
+      .menu-toggle {
+        width: 36px;
+        height: 36px;
+      }
+
+      .nav-links {
+        top: 64px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .brand span {
+        font-size: 0.95rem;
+      }
+
+      .btn-nav {
+        padding: 7px 10px;
+        font-size: 0.78rem;
       }
     }
   </style>
@@ -1032,7 +1206,7 @@
         <img src="assets/icon-128.png" alt="ODA Official Logo">
         <span>Omni Download Assistant</span>
       </a>
-      <nav class="nav-links">
+      <nav class="nav-links" id="navMenu">
         <a href="#features">Features</a>
         <a href="#extension">Extension</a>
         <a href="#compare">Compare</a>
@@ -1040,9 +1214,18 @@
         <a href="#faq">FAQ</a>
         <a href="https://github.com/Nafiur71/nafiur71.github.io" target="_blank" rel="noopener">GitHub</a>
       </nav>
-      <a href="https://github.com/Nafiur71/nafiur71.github.io/releases/download/v1.1.0/ODA_Omni_Download_Assistant_Setup_v1.1.0.exe" class="btn-nav">
-        ⬇ Download v1.1.0
-      </a>
+      <div class="nav-actions">
+        <a href="https://github.com/Nafiur71/nafiur71.github.io/releases/download/v1.1.0/ODA_Omni_Download_Assistant_Setup_v1.1.0.exe" class="btn-nav">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span class="btn-nav-text">Download</span>
+          <span class="btn-nav-version">v1.1.0</span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -1526,5 +1709,51 @@
     </div>
   </footer>
 
+  <!-- Interactive Responsive Navigation Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+          menuToggle.setAttribute('aria-expanded', !isExpanded);
+          menuToggle.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link inside it is clicked
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(function (link) {
+          link.addEventListener('click', function () {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        // Close menu on click outside
+        document.addEventListener('click', function (e) {
+          if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Close menu on Escape key
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.focus();
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
